@@ -65,15 +65,15 @@ class Code extends Controller
     {
         $waktu = $this->waktu->parse()->format('Y-m-d');
         return $this->code
-            ->join('links', 'links.id', '=', 'codes.idLink')
-            ->select(
-                'links.nama',
-                'links.link',
-                'codes.code'
-            )
-            ->where(['links.nama' => $data])
-            ->where('codes.created_at', 'like', $waktu . '%')
-            ->orderBy('codes.created_at', 'desc')->get();
+        ->join('links', 'links.id', '=', 'codes.idLink')
+        ->select(
+            'links.nama',
+            'links.link',
+            'codes.code'
+        )
+        ->where(['links.nama' => $data])
+        ->where('codes.created_at', 'like', $waktu . '%')
+        ->orderBy('codes.created_at', 'desc')->get();
     }
 
     //update

@@ -7,6 +7,8 @@ use App\Http\Controllers\Pesan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\QrExport;
 
 class Code extends Controller
 {
@@ -74,8 +76,10 @@ class Code extends Controller
         $dataku = collect($data)->map(function ($val) {
             return $val;
         });
-        $pdf = PDF::loadView('pdf.qrcode', ['data' => ($dataku)])->setPaper('A7', 'potrait');
-        return $pdf->stream();
+        $waktu = $this->waktu->parse()->format('YmdHis');
+        // $pdf = PDF::loadView('pdf.qrcode', ['data' => ($dataku)])->setPaper('A7', 'potrait');
+        // return $pdf->stream();
+        return Excel::download(new QrExport, $waktu.'-code.xlsx');
     }
 
     //update
